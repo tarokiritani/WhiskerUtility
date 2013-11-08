@@ -10,13 +10,8 @@ for (i=0; i<lengthOf(angles); i++) {
 	anglesDouble[i] = parseFloat(angles[i]);
 }
 
-print(anglesDouble[0]);
-print(anglesDouble[99]);
-
 r = split(lines[1], "=;");
-print(r[1]);
 r = parseFloat(r[1]);
-print(r);
 
 basePoint = split(lines[2], "[]");
 basePoint = split(basePoint[1]);
