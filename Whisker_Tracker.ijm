@@ -30,7 +30,21 @@ for (i=0; i<n; i++) {
 	}
 }
 
-run("Subtract Background...", "rolling=600 light stack");
+//run("Subtract Background...", "rolling=600 light stack");
+
+Dialog.create("range for z projection");
+Dialog.addNumber("first", 1, 0, 5, "th frame");
+Dialog.addNumber("last", 1, 0, 5, "th frame");
+Dialog.show();
+startNum = Dialog.getNumber();
+endNum = Dialog.getNumber();
+
+stackName = getTitle();
+run("Z Project...", "start=" + startNum + " stop=" + endNum +  " projection=Median");
+medianImage = getTitle();
+imageCalculator("difference create stack", stackName, medianImage);
+run("Invert", "stack");
+
 run("Line Width...", "line=5");
 sliceNum = nSlices;
 

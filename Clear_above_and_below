@@ -1,0 +1,11 @@
+getSelectionCoordinates(x,y);
+
+minX = minOf(minOf(x[0],x[1]), x[2]);
+maxX = maxOf(maxOf(x[0],x[1]), x[2]);
+minY = minOf(minOf(y[0],y[1]), y[2]);
+maxY = maxOf(maxOf(y[0],y[1]), y[2]);
+
+makeRectangle(minX, 0, maxX-minX, minY);
+run("Clear", "slice");
+makeRectangle(minX, maxY, maxX-minX, getHeight());
+run("Clear", "slice");
