@@ -28,9 +28,9 @@ for (i = 0; i<nSlices; i++) {
 	drawLine(basePointX, basePointY, basePointX + r * cos(anglesDouble[i] * PI / 180), basePointY - r * sin(anglesDouble[i] * PI / 180));
 }
 
-showMessage("right click to update the angle. <Alt> to end the process.");
+showMessage("left click to update the angle. right click to end the process.");
 
-alt = 8;
+rightButton = 4;
 leftButton = 16;
 iterate = true;
 while (iterate == true){
@@ -44,7 +44,7 @@ while (iterate == true){
 		iterate = true;
 		drawLine(basePointX, basePointY, basePointX + r * cos(anglesDouble[z] * PI / 180), basePointY - r * sin(anglesDouble[z] * PI / 180));
 	}
-	if (flags&alt != 0){
+	if (flags&rightButton != 0){
 		iterate = false;
 	}
 	wait(10);

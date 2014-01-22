@@ -113,11 +113,11 @@ f = File.open(""); // display file open dialog
 print(f, "angleArray = [" + minAngleString + "];");
 print(f, "r = " + r + ";");
 print(f, "basePoint = [" + toString(x0) + " " + toString(y0) + "];");
-print(f, "radialAngle = ");
 print(f, "x1 = " + xCoordinates[0] + "; y1 = " + yCoordinates[0] + ";");
 exit;
 
-function getMinIndex(a){  
+function getMinIndex(a){
+  
 	minIndex = 0;
 	for (i = 1; i<a.length; i++){
 		if (a[minIndex] > a[i]) {
