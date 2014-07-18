@@ -59,7 +59,8 @@ for (i=1; i<sliceNum+1; i++) {
 	for (j=0; j<pointNum; j++) {
 		outProfile[(i-1) * pointNum + j] = profile[j];
 	}
-	mi = getMinIndex(profile);
+	mi = Array.findMinima(profile, 1);
+	mi = mi[0];
 	ma = theta1 + (theta2 - theta1) * mi/profile.length;
 	drawLine(x0, y0, x0 + r*cos(ma), y0 - r * sin(ma));
 	Overlay.addSelection;
@@ -83,12 +84,10 @@ while(iterate == 1) {
 	for (i=0; i<sliceNum; i++) {
 		minIndex = 0;
 		minPixelVal = 255;
-		for (j=0; j<pointNum; j++) {
-			if (getPixel(i,j) < minPixelVal){
-				minPixelVal = getPixel(i,j);
-				minIndex = j;
-			}
-		}
+		makeLine(i, 0, i, pointNum);
+		column = getProfile();
+		columnIndex = Array.findMinima(column, 1);
+		minIndex = columnIndex[0];
 		minArray[i] = minIndex;
 		minAngle = (theta1 + (theta2 - theta1) * minIndex/pointNum) * 180 / PI;
 		minAngleString = minAngleString + " "+ toString(minAngle);
@@ -114,15 +113,4 @@ print(f, "angleArray = [" + minAngleString + "];");
 print(f, "r = " + r + ";");
 print(f, "basePoint = [" + toString(x0) + " " + toString(y0) + "];");
 print(f, "x1 = " + xCoordinates[0] + "; y1 = " + yCoordinates[0] + ";");
-exit;
-
-function getMinIndex(a){
-  
-	minIndex = 0;
-	for (i = 1; i<a.length; i++){
-		if (a[minIndex] > a[i]) {
-			minIndex = i;
-		}
-	}
-	return minIndex;
-}
+exit;
