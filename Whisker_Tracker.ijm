@@ -76,24 +76,25 @@ for (i=0; i<sliceNum; i++) {
 }
 
 run("Enhance Contrast", "saturated=0.35");
+run("Line Width...", "line=1");
 iterate = 1;
-
 while(iterate == 1) {
 	minArray = newArray(sliceNum);
-	minAngleString = "";
+	columns = newArray(sliceNum);
+	
 	for (i=0; i<sliceNum; i++) {
-		minIndex = 0;
-		minPixelVal = 255;
+		columns[i] = i;
 		makeLine(i, 0, i, pointNum);
-		column = getProfile();
-		columnIndex = Array.findMinima(column, 1);
-		minIndex = columnIndex[0];
-		minArray[i] = minIndex;
-		minAngle = (theta1 + (theta2 - theta1) * minIndex/pointNum) * 180 / PI;
-		minAngleString = minAngleString + " "+ toString(minAngle);
-		makePoint(i,minIndex);
-		run("Add Selection...");
+		columnProfile = getProfile();
+		columnIndex = Array.findMinima(columnProfile, 1);
+		minArray[i] = columnIndex[0];
 	}
+	
+	makeSelection("polyline", columns, minArray);
+	roiManager("add");
+	roiManager("Show All");
+	roiManager("Set Color", "red");
+	roiManager("Set Line Width", 2);
 	setTool("rectangle");
 	run("Colors...", "foreground=white background=white selection=red");
 	waitForUser("Inspect manually: \n Get rid of incorrectly tracked positions. \n Make rectangles with the mouse > right click > clear.");
@@ -103,8 +104,15 @@ while(iterate == 1) {
 	if (Dialog.getChoice == "ok!") {
 		iterate = 0;
 	} else {
-		run("Remove Overlay");
+		roiManager("reset");
 	}
+}
+
+minAngleString = "";
+for (i=0; i<sliceNum; i++) {
+	minAngle = (theta1 + (theta2 - theta1) * minArray[i]/pointNum) * 180 / PI;
+	minAngleString = minAngleString + " "+ toString(minAngle);
+
 }
 
 imageDir = getDirectory("image"); // need to specify the folder?
