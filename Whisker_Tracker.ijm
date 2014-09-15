@@ -108,16 +108,17 @@ while(iterate == 1) {
 	}
 }
 
-minAngleString = "";
-for (i=0; i<sliceNum; i++) {
-	minAngle = (theta1 + (theta2 - theta1) * minArray[i]/pointNum) * 180 / PI;
-	minAngleString = minAngleString + " "+ toString(minAngle);
-
-}
-
 imageDir = getDirectory("image"); // need to specify the folder?
 f = File.open(""); // display file open dialog
-print(f, "angleArray = [" + minAngleString + "];");
+print(f, "angleArray = [");
+
+for (i=0; i<sliceNum; i++) {
+	minAngle = (theta1 + (theta2 - theta1) * minArray[i]/pointNum) * 180 / PI;
+	minAngle = toString(minAngle);
+	print(f, " " + minAngle);
+}
+
+print(f, "];");
 print(f, "r = " + r + ";");
 print(f, "basePoint = [" + toString(x0) + " " + toString(y0) + "];");
 print(f, "x1 = " + xCoordinates[0] + "; y1 = " + yCoordinates[0] + ";");
