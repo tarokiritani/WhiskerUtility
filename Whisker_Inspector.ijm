@@ -1,6 +1,6 @@
 path = File.openDialog("open the log file.");
 str = File.openAsString(path);
-lines = split(str, "\n");
+lines = split(str, ";");
 angles = split(lines[0], "[]");
 angles = Array.slice(angles, 1, 2);
 angles = split(angles[0]);
@@ -17,9 +17,7 @@ basePoint = split(lines[2], "[]");
 basePoint = split(basePoint[1]);
 basePointX = parseFloat(basePoint[0]);
 basePointY = parseFloat(basePoint[1]);
-
-//moviePath = File.openDialog("open the movie file.");
-
+
 makeOval(basePointX-r, basePointY-r, 2*r, 2*r);
 Overlay.addSelection;
 
@@ -50,11 +48,19 @@ while (iterate == true){
 	wait(10);
 }
 
-anglesString = "";
-for (i = 0; i<lengthOf(anglesDouble); i++) {
-	anglesString = anglesString + " " + anglesDouble[i];
+f = File.open(""); // display file open dialog
+fName = File.name;
+fFolder = File.directory;
+fPath = fFolder + File.separator + fName;
+File.close(f);
+
+File.append("angleArray = [", fPath);
+
+for (i=0; i<lengthOf(anglesDouble); i++) {
+	File.append(" " + anglesDouble[i], fPath);
 }
 
-f = File.open(""); // display file open dialog
-print(f, "angleArray = [" + anglesString + "];");
-exit;
+File.append("];", fPath);
+File.append("\r", fPath);
+File.append("r = " + r + ";", fPath);
+File.append("basePoint = [" + toString(basePointX) + " " + toString(basePointY) + "];", fPath);

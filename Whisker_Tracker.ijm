@@ -110,16 +110,21 @@ while(iterate == 1) {
 
 imageDir = getDirectory("image"); // need to specify the folder?
 f = File.open(""); // display file open dialog
-print(f, "angleArray = [");
+fName = File.name;
+fFolder = File.directory;
+fPath = fFolder + File.separator + fName;
+File.close(f);
+
+File.append("angleArray = [", fPath);
 
 for (i=0; i<sliceNum; i++) {
 	minAngle = (theta1 + (theta2 - theta1) * minArray[i]/pointNum) * 180 / PI;
 	minAngle = toString(minAngle);
-	print(f, " " + minAngle);
+	File.append(" " + minAngle, fPath);
 }
 
-print(f, "];");
-print(f, "r = " + r + ";");
-print(f, "basePoint = [" + toString(x0) + " " + toString(y0) + "];");
-print(f, "x1 = " + xCoordinates[0] + "; y1 = " + yCoordinates[0] + ";");
-exit;
+File.append("];", fPath);
+File.append("\r", fPath);
+File.append("r = " + r + ";", fPath);
+File.append("basePoint = [" + toString(x0) + " " + toString(y0) + "];", fPath);
+File.append("x1 = " + xCoordinates[0] + "; y1 = " + yCoordinates[0] + ";", fPath);
