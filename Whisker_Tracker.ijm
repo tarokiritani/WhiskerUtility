@@ -30,8 +30,6 @@ for (i=0; i<n; i++) {
 	}
 }
 
-//run("Subtract Background...", "rolling=600 light stack");
-
 Dialog.create("range for z projection");
 Dialog.addNumber("first", 1, 0, 5, "th frame");
 Dialog.addNumber("last", 1, 0, 5, "th frame");
@@ -42,54 +40,41 @@ endNum = Dialog.getNumber();
 stackName = getTitle();
 run("Z Project...", "start=" + startNum + " stop=" + endNum +  " projection=Median");
 medianImage = getTitle();
-imageCalculator("difference create stack", stackName, medianImage);
-run("Invert", "stack");
-
 run("Line Width...", "line=5");
+eval("makeLine(" + points+")");
+profileMedian = getProfile();
+pointNum = profileMedian.length;
+selectWindow(stackName);
 sliceNum = nSlices;
+newImage("time vs angle","8-bit", sliceNum, pointNum, 1);
+selectWindow(stackName);
 
 for (i=1; i<sliceNum+1; i++) {
+	selectWindow(stackName);
 	Stack.setSlice(i);
 	eval("makeLine(" + points+")");
 	profile = getProfile();
-	if (i == 1) {
-		pointNum = profile.length;
-		outProfile = newArray(sliceNum * pointNum);
-	}
+	selectWindow("time vs angle");
 	for (j=0; j<pointNum; j++) {
-		outProfile[(i-1) * pointNum + j] = profile[j];
-	}
-	mi = Array.findMinima(profile, 1);
-	mi = mi[0];
-	ma = theta1 + (theta2 - theta1) * mi/profile.length;
-	drawLine(x0, y0, x0 + r*cos(ma), y0 - r * sin(ma));
-	Overlay.addSelection;
-}
-
-newImage("time vs angle","8-bit", sliceNum, pointNum, 1);
-selectWindow("time vs angle");
-
-for (i=0; i<sliceNum; i++) {
-	for (j=0; j<pointNum; j++){
-		setPixel(i, j, outProfile[i*pointNum + j]);
+		setPixel(i-1, j, abs(profile[j]-profileMedian[j]));
 	}
 }
-
+run("Invert");
 run("Enhance Contrast", "saturated=0.35");
 run("Line Width...", "line=1");
 iterate = 1;
 while(iterate == 1) {
 	minArray = newArray(sliceNum);
 	columns = newArray(sliceNum);
-	
 	for (i=0; i<sliceNum; i++) {
 		columns[i] = i;
-		makeLine(i, 0, i, pointNum);
+		makeLine(i, 0, i, pointNum-1);
 		columnProfile = getProfile();
-		columnIndex = Array.findMinima(columnProfile, 1);
-		minArray[i] = columnIndex[0];
+		columnMin = Array.findMinima(columnProfile, 1);
+		minArray[i] = columnMin[0];
 	}
-	
+	print(minArray[0]);
+	print(minArray[100]);
 	makeSelection("polyline", columns, minArray);
 	roiManager("add");
 	roiManager("Show All");
@@ -127,4 +112,4 @@ File.append("];", fPath);
 File.append("\r", fPath);
 File.append("r = " + r + ";", fPath);
 File.append("basePoint = [" + toString(x0) + " " + toString(y0) + "];", fPath);
-File.append("x1 = " + xCoordinates[0] + "; y1 = " + yCoordinates[0] + ";", fPath);
+File.append("x1 = " + xCoordinates[0] + "; y1 = " + yCoordinates[0] + ";", fPath);
