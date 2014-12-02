@@ -46,19 +46,24 @@ profileMedian = getProfile();
 pointNum = profileMedian.length;
 selectWindow(stackName);
 sliceNum = nSlices;
-newImage("time vs angle","8-bit", sliceNum, pointNum, 1);
-selectWindow(stackName);
-
+outProfile = newArray(sliceNum * pointNum);
 for (i=1; i<sliceNum+1; i++) {
-	selectWindow(stackName);
 	Stack.setSlice(i);
 	eval("makeLine(" + points+")");
 	profile = getProfile();
-	selectWindow("time vs angle");
 	for (j=0; j<pointNum; j++) {
-		setPixel(i-1, j, abs(profile[j]-profileMedian[j]));
+		outProfile[(i-1) * pointNum + j] = abs(profile[j]-profileMedian[j]);
 	}
 }
+
+newImage("time vs angle","8-bit", sliceNum, pointNum, 1);
+selectWindow("time vs angle");
+for (i=0; i<sliceNum; i++) {
+	for (j=0; j<pointNum; j++){
+		setPixel(i, j, outProfile[i*pointNum + j]);
+	}
+}
+
 run("Invert");
 run("Enhance Contrast", "saturated=0.35");
 run("Line Width...", "line=1");
