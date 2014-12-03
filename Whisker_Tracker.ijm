@@ -33,13 +33,21 @@ for (i=0; i<n; i++) {
 Dialog.create("range for z projection");
 Dialog.addNumber("first", 1, 0, 5, "th frame");
 Dialog.addNumber("last", 1, 0, 5, "th frame");
+Dialog.addCheckbox("Load background image from a file", false);
 Dialog.show();
 startNum = Dialog.getNumber();
 endNum = Dialog.getNumber();
+loadBg = Dialog.getCheckbox();
+stackName = getTitle();
 
-stackName = getTitle();
-run("Z Project...", "start=" + startNum + " stop=" + endNum +  " projection=Median");
-medianImage = getTitle();
+if (loadBg == false) {	
+	run("Z Project...", "start=" + startNum + " stop=" + endNum +  " projection=Median");
+	medianImage = getTitle();
+} else {
+	open();
+	medianImage = getTitle();
+}
+
 run("Line Width...", "line=5");
 eval("makeLine(" + points+")");
 profileMedian = getProfile();
