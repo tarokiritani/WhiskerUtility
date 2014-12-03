@@ -78,8 +78,6 @@ while(iterate == 1) {
 		columnMin = Array.findMinima(columnProfile, 1);
 		minArray[i] = columnMin[0];
 	}
-	print(minArray[0]);
-	print(minArray[100]);
 	makeSelection("polyline", columns, minArray);
 	roiManager("add");
 	roiManager("Show All");
