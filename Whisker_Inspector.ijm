@@ -21,17 +21,14 @@ basePointY = parseFloat(basePoint[1]);
 makeOval(basePointX-r, basePointY-r, 2*r, 2*r);
 Overlay.addSelection;
 
-for (i = 0; i<nSlices; i++) {
-	Stack.setSlice(i + 1);
-	drawLine(basePointX, basePointY, basePointX + r * cos(anglesDouble[i] * PI / 180), basePointY - r * sin(anglesDouble[i] * PI / 180));
-}
-
 showMessage("left click to update the angle. right click to end the process.");
 
 rightButton = 4;
 leftButton = 16;
 iterate = true;
 while (iterate == true){
+	sn = getSliceNumber();
+	drawLine(basePointX, basePointY, basePointX + r * cos(anglesDouble[sn-1] * PI / 180), basePointY - r * sin(anglesDouble[sn-1] * PI / 180));
 	getCursorLoc(x, y, z, flags);
 	if (flags&leftButton != 0){
 		tangential = atan2(basePointY - y, x - basePointX);
@@ -45,7 +42,6 @@ while (iterate == true){
 	if (flags&rightButton != 0){
 		iterate = false;
 	}
-	wait(10);
 }
 
 f = File.open(""); // display file open dialog
