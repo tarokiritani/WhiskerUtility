@@ -48,12 +48,12 @@ the points, you can still click and drag the points to change the positions.
 4. Click "OK".
 5. Make a background image. This can be done by getting the median projection between two frames or by loading a file.
 6. The background image is subtracted, and the program looks for the darkest point on the arc. Do not click image windows of ImageJ while the macro is running.
-7. A new image named "time vs angle" pops up. In this image, each column corresponds to a frame. The darkest points in each column are connected.
+7. A new image named "time vs angle" pops up. In this image, each column corresponds to a profile on the arc of a frame. The darkest points in each column are connected.
 8. Remove any incorrectly tracked points by a. making an roi, and b. hit edit > clear. It is convenient to make a shortcut for 'clear' in Plugins > Shortcuts > Create shortcut.
 9. Repeat this until the whisker is correctly tracked.
 10. Save the data in a text file. The text can be directly
  copied and pasted in Matlab.
 11. Click your movie stack and run Whisker_Inspector.ijm. Open the output file you generated when prompted.
 12. Check whisker position in each frame. Correct whisker position with a left click. Right click the image when you are done.
-13. If this software is useful to you, we'd appreciate it if you acknowledged it with
+13. If this software is useful to you, I would appreciate it if you acknowledged it with
 the URL (https://github.com/tarokiritani/jWhisktracker).
