@@ -95,7 +95,7 @@ while(iterate == 1) {
 	run("Colors...", "foreground=white background=white selection=red");
 	waitForUser("Inspect manually: \n Get rid of incorrectly tracked positions. \n Make rectangles with the mouse > right click > clear.");
 	Dialog.create("Manual Inspection");
-	Dialog.addChoice("Is this OK?", newArray("Find minima again!", "ok!"));
+	Dialog.addChoice("Is this OK?", newArray("Find minima again!", "Save the data!"));
 	Dialog.show();
 	if (Dialog.getChoice == "ok!") {
 		iterate = 0;
