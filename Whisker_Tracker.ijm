@@ -93,7 +93,7 @@ while(iterate == 1) {
 	roiManager("Set Line Width", 2);
 	setTool("rectangle");
 	run("Colors...", "foreground=white background=white selection=red");
-	waitForUser("Inspect manually: \n Get rid of incorrectly tracked positions. \n Make rectangles with the mouse > right click > clear.");
+	waitForUser("Inspect manually: \n Get rid of incorrectly tracked positions. \n Make an roi > Edit > Clear (or create a shortcut).");
 	Dialog.create("Manual Inspection");
 	Dialog.addChoice("Is this OK?", newArray("Find minima again!", "Save the data!"));
 	Dialog.show();
