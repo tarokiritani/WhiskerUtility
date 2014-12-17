@@ -97,7 +97,7 @@ while(iterate == 1) {
 	Dialog.create("Manual Inspection");
 	Dialog.addChoice("Is this OK?", newArray("Find minima again!", "Save the data!"));
 	Dialog.show();
-	if (Dialog.getChoice == "ok!") {
+	if (Dialog.getChoice == "Save the data!") {
 		iterate = 0;
 	} else {
 		roiManager("reset");
