@@ -86,6 +86,7 @@ while(iterate == 1) {
 		columnMin = Array.findMinima(columnProfile, 1);
 		minArray[i] = columnMin[0];
 	}
+	roiManager("reset");
 	makeSelection("polyline", columns, minArray);
 	roiManager("add");
 	roiManager("Show All");
@@ -99,8 +100,6 @@ while(iterate == 1) {
 	Dialog.show();
 	if (Dialog.getChoice == "Save the data!") {
 		iterate = 0;
-	} else {
-		roiManager("reset");
 	}
 }
 
