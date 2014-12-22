@@ -9,6 +9,7 @@ anglesDouble = newArray(lengthOf(angles));
 for (i=0; i<lengthOf(angles); i++) {
 	anglesDouble[i] = parseFloat(angles[i]);
 }
+Array.getStatistics(anglesDouble, min, max, mean, stdDev);
 
 r = split(lines[1], "=;");
 r = parseFloat(r[1]);
@@ -33,10 +34,10 @@ while (iterate == true){
 	if (flags&leftButton != 0){
 		tangential = atan2(basePointY - y, x - basePointX);
 		tangential = tangential * 180 / PI;
-		if (tangential - anglesDouble[z] > 180){
+		if (tangential - mean > 180){
 			tangential = tangential - 360;
 		}
-		if (tangential - anglesDouble[z] < -180){
+		if (tangential - mean < -180){
 			tangential = tangential + 360;
 		}
 		anglesDouble[z] = tangential;
