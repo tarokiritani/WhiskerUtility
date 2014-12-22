@@ -32,10 +32,14 @@ while (iterate == true){
 	getCursorLoc(x, y, z, flags);
 	if (flags&leftButton != 0){
 		tangential = atan2(basePointY - y, x - basePointX);
-		if (tangential < 0){
-			tangential = tangential + 2 * PI;
+		tangential = tangential * 180 / PI;
+		if (tangential - anglesDouble[z] > 180){
+			tangential = tangential - 360;
 		}
-		anglesDouble[z] = tangential * 180 / PI;
+		if (tangential - anglesDouble[z] < -180){
+			tangential = tangential + 360;
+		}
+		anglesDouble[z] = tangential;
 		iterate = true;
 		drawLine(basePointX, basePointY, basePointX + r * cos(anglesDouble[z] * PI / 180), basePointY - r * sin(anglesDouble[z] * PI / 180));
 	}
